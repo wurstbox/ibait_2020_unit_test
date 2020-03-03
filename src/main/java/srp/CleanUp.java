@@ -1,4 +1,4 @@
-package clean_up;
+package srp;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

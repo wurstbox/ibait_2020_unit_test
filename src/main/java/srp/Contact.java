@@ -1,4 +1,4 @@
-package clean_up;
+package srp;
 
 public class Contact {
 	private String name;

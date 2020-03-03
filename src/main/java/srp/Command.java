@@ -1,4 +1,4 @@
-package clean_up;
+package srp;
 
 public enum Command
 {
