@@ -15,7 +15,7 @@ public class Controller
 {
 	private static final String MY_CONTACTS_TXT = "/my_contacts.txt";
 	
-	private final ArrayList<Contact> list;
+	private final List<Contact> list;
 	private final BufferedReader consoleReader;
 	private boolean eventLoopRunning;
 
@@ -32,7 +32,7 @@ public class Controller
 			loadContacts();
 			runEventLoop();
 		}
-		catch(ReaderException | ConversionException e)
+		catch(LoadingError e)
 		{
 			System.out.println("Program terminated: " + e.getLocalizedMessage());
 		}
@@ -197,18 +197,11 @@ public class Controller
 		}
 	}
 
-	private void loadContacts() throws ReaderException, ConversionException
+	private void loadContacts() throws LoadingError
 	{
-		ContactRawDataReader reader = new ContactRawDataReader(MY_CONTACTS_TXT);
-		List<String> rawData = reader.read();
-		
-		RawDataToContactConverter converter = new RawDataToContactConverter();
-		List<Contact> contacts = converter.convert(rawData);
-		
-		for(var contact : contacts)
-		{
-			list.add(contact);
-		}
+		ContactLoader contactLoader = new ContactLoader(MY_CONTACTS_TXT);
+		var contacts = contactLoader.load();
+		list.addAll(contacts);
 	}
 
 	private String readInput(String prompt)
