@@ -8,9 +8,10 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class CleanUp
+public class Controller
 {
 	private static final String MY_CONTACTS_TXT = "/my_contacts.txt";
 	
@@ -18,7 +19,7 @@ public class CleanUp
 	private final BufferedReader consoleReader;
 	private boolean eventLoopRunning;
 
-	public CleanUp()
+	public Controller()
 	{
 		list = new ArrayList<>();
 		consoleReader = new BufferedReader(new InputStreamReader(System.in));
@@ -26,8 +27,15 @@ public class CleanUp
 
 	public void process()
 	{
-		loadContacts();
-		runEventLoop();
+		try
+		{
+			loadContacts();
+			runEventLoop();
+		}
+		catch(ReaderException | ConversionException e)
+		{
+			System.out.println("Program terminated: " + e.getLocalizedMessage());
+		}
 	}
 
 	private void runEventLoop()
@@ -70,7 +78,7 @@ public class CleanUp
 
 	private void onCommandSave()
 	{
-		try(BufferedWriter bw = Files.newBufferedWriter(Paths.get(CleanUp.class.getResource(MY_CONTACTS_TXT).toURI())))
+		try(BufferedWriter bw = Files.newBufferedWriter(Paths.get(Controller.class.getResource(MY_CONTACTS_TXT).toURI())))
 		{
 			for(var contact : list)
 			{
@@ -189,21 +197,17 @@ public class CleanUp
 		}
 	}
 
-	private void loadContacts()
+	private void loadContacts() throws ReaderException, ConversionException
 	{
-		try(BufferedReader br = new BufferedReader(
-				new InputStreamReader(CleanUp.class.getResourceAsStream(MY_CONTACTS_TXT))))
+		ContactRawDataReader reader = new ContactRawDataReader(MY_CONTACTS_TXT);
+		List<String> rawData = reader.read();
+		
+		RawDataToContactConverter converter = new RawDataToContactConverter();
+		List<Contact> contacts = converter.convert(rawData);
+		
+		for(var contact : contacts)
 		{
-			String line;
-			while((line = br.readLine()) != null)
-			{
-				var array = line.split("\t");
-				list.add(new Contact(array[0], array[1]));
-			}
-		}
-		catch(Exception e)
-		{
-			throw new RuntimeException(e);
+			list.add(contact);
 		}
 	}
 
@@ -219,12 +223,6 @@ public class CleanUp
 		{
 			throw new RuntimeException(e);
 		}
-	}
-
-	public static void main(String[] args)
-	{
-		CleanUp c = new CleanUp();
-		c.process();
 	}
 
 }
