@@ -1,9 +1,11 @@
-package srp;
+package dip.reading;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class RawDataToContactConverter
+import dip.data_model.Contact;
+
+class RawDataToContactConverter
 {
 	public List<Contact> convert(List<String> rawData) throws ConversionException
 	{

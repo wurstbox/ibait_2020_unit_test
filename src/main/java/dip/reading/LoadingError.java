@@ -1,4 +1,4 @@
-package srp;
+package dip.reading;
 
 public class LoadingError extends Exception
 {

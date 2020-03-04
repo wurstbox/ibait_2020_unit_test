@@ -1,4 +1,4 @@
-package srp;
+package dip;
 
 public enum Command
 {

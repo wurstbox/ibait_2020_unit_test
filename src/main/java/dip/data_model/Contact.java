@@ -1,4 +1,4 @@
-package srp;
+package dip.data_model;
 
 public class Contact {
 	private String name;

@@ -1,4 +1,6 @@
-package srp;
+package dip;
+
+import dip.controller.Controller;
 
 public class Application
 {

@@ -1,4 +1,4 @@
-package srp;
+package dip;
 
 public class InputException extends Exception
 {

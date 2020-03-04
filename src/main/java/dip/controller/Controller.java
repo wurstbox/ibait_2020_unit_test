@@ -1,9 +1,7 @@
-package srp;
+package dip.controller;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,18 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import dip.Command;
+import dip.InputException;
+import dip.console.Console;
+import dip.console.ConsoleException;
+import dip.data_model.Contact;
+import dip.eventLoop.EventLoop;
+import dip.reading.ContactLoader;
+import dip.reading.LoadingError;
+
 public class Controller
 {
 	private static final String MY_CONTACTS_TXT = "/my_contacts.txt";
 	
 	private final List<Contact> list;
-	private final BufferedReader consoleReader;
-	private boolean eventLoopRunning;
+	private final Console console;
+
+	private EventLoop eventLoop;
 
 	public Controller()
 	{
 		list = new ArrayList<>();
-		consoleReader = new BufferedReader(new InputStreamReader(System.in));
+		console = new Console();
+		eventLoop = new EventLoop();
 	}
 
 	public void process()
@@ -34,15 +43,15 @@ public class Controller
 		}
 		catch(LoadingError e)
 		{
-			System.out.println("Program terminated: " + e.getLocalizedMessage());
+			console.writeLine("Program terminated: " + e.getLocalizedMessage());
 		}
 	}
 
 	private void runEventLoop()
 	{
-		eventLoopRunning = true;
-
-		while(eventLoopRunning)
+		eventLoop.start();
+		
+		while(eventLoop.isRunning())
 		{
 			try
 			{
@@ -52,7 +61,7 @@ public class Controller
 			}
 			catch(InputException e)
 			{
-				System.out.println(e.getLocalizedMessage());
+				console.writeLine(e.getLocalizedMessage());
 			}
 		}
 	}
@@ -61,18 +70,18 @@ public class Controller
 	{
 		switch(command)
 		{
-		case Delete:
-			onCommandDelete();
-			break;
-		case Exit:
-			onCommandExit();
-			break;
-		case New:
-			onCommandNew();
-			break;
-		case Save:
-			onCommandSave();
-			break;
+			case Delete:
+				onCommandDelete();
+				break;
+			case Exit:
+				onCommandExit();
+				break;
+			case New:
+				onCommandNew();
+				break;
+			case Save:
+				onCommandSave();
+				break;
 		}
 	}
 
@@ -84,7 +93,7 @@ public class Controller
 			{
 				writeContactToFile(bw, contact);
 			}
-			System.out.println("Contacts saved");
+			console.writeLine("Contacts saved");
 		}
 		catch(IOException | URISyntaxException e)
 		{
@@ -128,7 +137,7 @@ public class Controller
 		}
 		catch(InputException e)
 		{
-			System.out.println(e.getLocalizedMessage());
+			console.writeLine(e.getLocalizedMessage());
 		}
 
 	}
@@ -180,20 +189,15 @@ public class Controller
 
 	private void endProgram()
 	{
-		System.out.println("Have a nice day");
-		stopEventLoop();
-	}
-
-	private void stopEventLoop()
-	{
-		eventLoopRunning = false;
+		console.writeLine("Have a nice day");
+		eventLoop.stop();
 	}
 
 	private void printContacts()
 	{
 		for(int i = 0; i < list.size(); i++)
 		{
-			System.out.println(i + 1 + ") " + list.get(i).getName() + ": " + list.get(i).getEMail());
+			console.writeLine(i + 1 + ") " + list.get(i).getName() + ": " + list.get(i).getEMail());
 		}
 	}
 
@@ -206,13 +210,12 @@ public class Controller
 
 	private String readInput(String prompt)
 	{
-		System.out.println(prompt);
 		try
 		{
-			String line = consoleReader.readLine();
+			String line = console.readLine(prompt);
 			return line;
 		}
-		catch(IOException e)
+		catch(ConsoleException e)
 		{
 			throw new RuntimeException(e);
 		}
