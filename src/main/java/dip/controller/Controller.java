@@ -17,6 +17,7 @@ import dip.console.ConsoleException;
 import dip.data_model.Contact;
 import dip.data_model.ContactDefault;
 import dip.eventLoop.EventLoop;
+import dip.reading.ContactFromFileLoader;
 import dip.reading.ContactLoader;
 import dip.reading.LoadingError;
 
@@ -205,7 +206,7 @@ public class Controller
 
 	private void loadContacts() throws LoadingError
 	{
-		ContactLoader contactLoader = new ContactLoader(MY_CONTACTS_TXT);
+		ContactLoader contactLoader = new ContactFromFileLoader(MY_CONTACTS_TXT);
 		var contacts = contactLoader.load();
 		list.addAll(contacts);
 	}
