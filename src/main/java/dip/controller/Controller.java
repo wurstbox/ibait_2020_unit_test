@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.Objects;
 
 import dip.Command;
+import dip.Factory;
 import dip.InputException;
 import dip.console.Console;
 import dip.console.ConsoleException;
 import dip.data_model.Contact;
+import dip.data_model.ContactDefault;
 import dip.eventLoop.EventLoop;
 import dip.reading.ContactLoader;
 import dip.reading.LoadingError;
@@ -89,7 +91,7 @@ public class Controller
 	{
 		try(BufferedWriter bw = Files.newBufferedWriter(Paths.get(Controller.class.getResource(MY_CONTACTS_TXT).toURI())))
 		{
-			for(var contact : list)
+			for(Contact contact : list)
 			{
 				writeContactToFile(bw, contact);
 			}
@@ -116,7 +118,7 @@ public class Controller
 
 		if(name != null && email != null)
 		{
-			Contact contact = new Contact(name, email);
+			Contact contact = Factory.get().newContact(name, email);
 			list.add(contact);
 		}
 	}

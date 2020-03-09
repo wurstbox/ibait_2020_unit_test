@@ -3,7 +3,9 @@ package dip.reading;
 import java.util.LinkedList;
 import java.util.List;
 
+import dip.Factory;
 import dip.data_model.Contact;
+import dip.data_model.ContactDefault;
 
 class RawDataToContactConverter
 {
@@ -29,7 +31,7 @@ class RawDataToContactConverter
 
 	private Contact createContact(String[] splitRawData)
 	{
-		Contact contact = new Contact(splitRawData[0], splitRawData[1]);
+		Contact contact = Factory.get().newContact(splitRawData[0], splitRawData[1]);
 		return contact;
 	}
 
