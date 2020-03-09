@@ -1,4 +1,4 @@
-package dip.reading;
+package unit_test.reading;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

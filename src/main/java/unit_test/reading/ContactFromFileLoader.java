@@ -1,8 +1,8 @@
-package dip.reading;
+package unit_test.reading;
 
 import java.util.List;
 
-import dip.data_model.Contact;
+import unit_test.data_model.Contact;
 
 public class ContactFromFileLoader extends ContactLoader
 {

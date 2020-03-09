@@ -1,4 +1,4 @@
-package dip;
+package unit_test;
 
 public enum Command
 {

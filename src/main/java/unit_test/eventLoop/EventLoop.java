@@ -1,4 +1,4 @@
-package dip.eventLoop;
+package unit_test.eventLoop;
 
 public class EventLoop
 {

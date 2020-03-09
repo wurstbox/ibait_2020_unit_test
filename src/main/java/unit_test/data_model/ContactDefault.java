@@ -1,4 +1,4 @@
-package dip.data_model;
+package unit_test.data_model;
 
 public class ContactDefault implements Contact {
 	private String name;

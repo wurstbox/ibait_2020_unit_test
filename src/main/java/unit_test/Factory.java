@@ -1,7 +1,7 @@
-package dip;
+package unit_test;
 
-import dip.data_model.Contact;
-import dip.data_model.ContactDefault;
+import unit_test.data_model.Contact;
+import unit_test.data_model.ContactDefault;
 
 public abstract class Factory
 {

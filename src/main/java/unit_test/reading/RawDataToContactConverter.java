@@ -1,11 +1,11 @@
-package dip.reading;
+package unit_test.reading;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import dip.Factory;
-import dip.data_model.Contact;
-import dip.data_model.ContactDefault;
+import unit_test.Factory;
+import unit_test.data_model.Contact;
+import unit_test.data_model.ContactDefault;
 
 class RawDataToContactConverter
 {

@@ -1,4 +1,4 @@
-package dip.console;
+package unit_test.console;
 
 import java.io.BufferedReader;
 import java.io.IOException;
