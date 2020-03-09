@@ -1,4 +1,4 @@
-package dip.reading;
+package unit_test.reading;
 
 class ReaderException extends Exception
 {

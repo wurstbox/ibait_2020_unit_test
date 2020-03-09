@@ -1,4 +1,4 @@
-package dip.controller;
+package unit_test.controller;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import dip.Command;
-import dip.Factory;
-import dip.InputException;
-import dip.console.Console;
-import dip.console.ConsoleException;
-import dip.data_model.Contact;
-import dip.data_model.ContactDefault;
-import dip.eventLoop.EventLoop;
-import dip.reading.ContactFromFileLoader;
-import dip.reading.ContactLoader;
-import dip.reading.LoadingError;
+import unit_test.Command;
+import unit_test.Factory;
+import unit_test.InputException;
+import unit_test.console.Console;
+import unit_test.console.ConsoleException;
+import unit_test.data_model.Contact;
+import unit_test.data_model.ContactDefault;
+import unit_test.eventLoop.EventLoop;
+import unit_test.reading.ContactFromFileLoader;
+import unit_test.reading.ContactLoader;
+import unit_test.reading.LoadingError;
 
 public class Controller
 {

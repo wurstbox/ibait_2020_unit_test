@@ -1,6 +1,6 @@
-package dip;
+package unit_test;
 
-import dip.controller.Controller;
+import unit_test.controller.Controller;
 
 public class Application
 {
